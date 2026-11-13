@@ -1,0 +1,25 @@
+harness.py: OK (offline mode, 100 ledgers, 101 amendments, 66 validators, 0 amendment pseudo-transactions)
+build_derived.py: OK (docs/index.html)
+./README.md: OK
+./attack_trees.md: OK
+./build_derived.py: OK
+./claim_evidence_index.md: OK
+./docs/index.html: OK
+./harness.py: OK
+./results/amendment_counts.csv: OK
+./results/amendment_table.csv: OK
+./results/attack_path_counts.csv: OK
+./results/fetch_log.json: OK
+./results/ledger_sample.csv: OK
+./results/sample_amendment_data.json: OK
+./results/summary.json: OK
+./results/summary.txt: OK
+./results/validator_counts.csv: OK
+./results/validator_sample.csv: OK
+./run_all.sh: OK
+./threat_model.csv: OK
+./threat_model.md: OK
+./verify_digests.sh: OK
+verify_digests.sh: SHA256SUMS regenerated and verified
+run_all.sh: OK
+run_all.sh exit code: 0

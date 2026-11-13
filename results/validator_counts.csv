@@ -1,0 +1,14 @@
+metric,count
+vhs_count,66
+rows_returned,66
+unl_count,25
+master_eq_validation_key,65
+signing_ne_master_key,66
+domain_verified,55
+revoked,0
+partial,0
+agreement_1h_missed_gt0,1
+server_version_1.0.0,2
+server_version_1.0.4,9
+server_version_1.0.8,1
+server_version_1.0.9,54

@@ -1,0 +1,9 @@
+metric,count
+total_listed,101
+enabled,64
+not_enabled,37
+supported,101
+with_majority_timestamp,0
+postfiat_specific_total,2
+postfiat_specific_enabled,0
+fixAmendmentMajorityCalc_enabled,1

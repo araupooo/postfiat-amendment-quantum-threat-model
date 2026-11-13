@@ -1,0 +1,33 @@
+PFTL amendment-state probe
+fetch date (UTC): 2026-11-13T23:02:58Z
+pinned commit: 0085a1ff885d6a446369cf73a4430f75af22be55
+tree_head_matches_pinned: True
+
+Server: build 1.0.9, network_id 2025, validated ledger 8025564
+complete_ledgers: 7950054-8025564; peers: 21; validation_quorum: 17; last_close proposers: 24
+node public key: n9K4AomBUHA8XGwXtZs6qfCjXm5aXre9UchiD6oGuZx1UeRLUweE
+
+Amendments: 101 listed, 64 enabled, 37 not enabled, 0 with a majority timestamp
+fixAmendmentMajorityCalc enabled: True
+PostFiat-specific amendments: PF_AccountExclusion, PF_ValidatorVoteTracking (enabled: 0)
+VHS vote list: 64 enabled amendments, enablement ledgers [86785], dates ['2026-02-09T14:31:12.000Z']
+
+Validators (VHS): 66 total, 25 in UNL, 65 master==validation key, 66 signing key != master key
+domain_verified: 55; revoked: 0; partial: 0; agreement_1h missed>0: 1
+server versions: {"1.0.0": 2, "1.0.4": 9, "1.0.8": 1, "1.0.9": 54}
+
+Node manifest: ephemeral key == master key: True
+
+Ledger sample: 100 requested, 100 fetched, 0 missing; 35 transactions, 0 amendment pseudo-transactions
+mean close interval: 3.03 s over 300 s
+
+Quorum arithmetic (trusted validations -> force/block votes):
+  t=66 (VHS validator count (live)): 67% threshold 44, force 45, block 22; 80% threshold 52, force 53, block 14; validation quorum 45
+  t=50 (partial participation sensitivity): 67% threshold 33, force 34, block 17; 80% threshold 40, force 41, block 10; validation quorum 34
+  t=40 (partial participation sensitivity): 67% threshold 26, force 27, block 14; 80% threshold 32, force 33, block 8; validation quorum 27
+  t=30 (partial participation sensitivity): 67% threshold 20, force 21, block 10; 80% threshold 24, force 25, block 6; validation quorum 21
+  t=25 (UNL count (live, VHS unl=true)): 67% threshold 16, force 17, block 9; 80% threshold 20, force 21, block 5; validation quorum 17
+  t=17 (probed node validation_quorum (live, server_info)): 67% threshold 11, force 12, block 6; 80% threshold 13, force 14, block 4; validation quorum 12
+
+Secrets redacted from the vendored sample: 0
+sample_sha256: 612584c1637dd0b0a0dcc55d89c3e0de37af594bc2f34390ade414fb44891469
