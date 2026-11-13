@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PFTL Amendment-State Probe: Quantum Threat Model for the Amendment Process</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  max-width:900px;margin:2em auto;padding:0 1em;color:#111;line-height:1.5}
+h1{font-size:1.6em}h2{font-size:1.25em;margin-top:1.5em}
+table{border-collapse:collapse;width:100%;margin:1em 0}
+th,td{border:1px solid #ccc;padding:.35em .6em;text-align:left;
+  font-size:.92em}th{background:#f0f0f0}
+code{background:#f4f4f4;padding:0 .2em}
+.callout{background:#f7f3e8;border-left:4px solid #b58900;padding:.7em 1em}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em}
+</style>
+</head>
+<body>
+<h1>PFTL Amendment-State Probe: Quantum Threat Model for the Amendment Process</h1>
+<p>Which parts of the amendment process a harvest-now quantum adversary
+can attack, what each break would and would not buy, and where the
+process is structurally safe. Pinned tree: postfiatd main
+<code>0085a1ff885d6a446369cf73a4430f75af22be55</code>. Live probe fetched 2026-11-13T23:02:58Z from the
+public read-only endpoints <code>https://rpc.testnet.postfiat.org/</code> and
+<code>https://vhs.testnet.postfiat.org/v1/network/</code> (no credentials, no writes, no live peer
+connections). Server: build 1.0.9, network_id 2025, validated
+ledger 8025564.</p>
+
+<div class="callout"><strong>Headline finding.</strong> The amendment
+process is a <strong>threshold game over secp256k1 signatures</strong>,
+and the threshold is <strong>67%, not 80%</strong>. With all 66
+validators voting, forcing an amendment to a majority takes
+<strong>45 broken validator keys</strong> under the live 67% rule
+(53 under the upstream 80% rule), and blocking a unanimous yes vote
+takes <strong>22</strong> (14 under 80%). The 67% rule therefore
+makes forcing easier and blocking harder than upstream — but the
+number that matters is still large, and no single broken key can do
+anything at all: one key is one vote, and the ledger records the
+majority, not the individual vote. The process has never been
+exercised live on this testnet: all 64 enabled amendments
+were enabled at a single ledger (86785,
+2026-02-09T14:31:12.000Z) and <strong>no amendment currently holds a
+majority</strong>. The cheapest quantum attack is therefore not
+forging a majority at all — it is forging a majority for an
+<strong>unsupported</strong> amendment, which makes every node that
+does not support it halt with &ldquo;server blocked&rdquo;.</div>
+
+<h2>Headline numbers</h2>
+<table>
+<tr><th>Measure</th><th>Value</th></tr>
+<tr><td>Amendments listed</td><td>101 (64 enabled, 37 not enabled, 0 with a majority timestamp)</td></tr>
+<tr><td>fixAmendmentMajorityCalc</td><td>True (post-fix 67% rule live)</td></tr>
+<tr><td>PostFiat-specific amendments</td><td>PF_AccountExclusion, PF_ValidatorVoteTracking — 2 total, 0 enabled</td></tr>
+<tr><td>Validators (VHS)</td><td>66 total, 25 in UNL, 65 master key == validation key, 66 signing key != master key</td></tr>
+<tr><td>Domain verified / revoked / partial</td><td>55 / 0 / 0</td></tr>
+<tr><td>Server versions</td><td>1.0.0: 2, 1.0.4: 9, 1.0.8: 1, 1.0.9: 54</td></tr>
+<tr><td>Agreement (1h) validators with missed &gt; 0</td><td>1</td></tr>
+<tr><td>Node manifest</td><td>Ephemeral key equals master key: True (the probed node validates with its master key directly)</td></tr>
+<tr><td>Ledger sample</td><td>100 requested, 100 fetched, 0 missing; 35 transactions, 0 amendment pseudo-transactions</td></tr>
+<tr><td>Mean close interval</td><td>3.03 s over 300 s</td></tr>
+<tr><td>Secrets redacted from the vendored sample</td><td>0</td></tr>
+<tr><td>Sample SHA-256</td><td class="mono">612584c1637dd0b0a0dcc55d89c3e0de37af594bc2f34390ade414fb44891469</td></tr>
+</table>
+
+<h2>Quorum arithmetic per attack path</h2>
+<p>Force = votes needed to push an amendment over the majority
+threshold (threshold + 1). Block = votes that must be removed or
+flipped to stop a unanimous yes vote from reaching a majority.
+Validation quorum = max(ceil(t &times; 0.67), ceil(t &times; 0.6)).</p>
+<table>
+<tr><th>Trusted validations</th><th>Context</th>
+<th>Threshold 67%</th><th>Force 67%</th><th>Block 67%</th>
+<th>Threshold 80%</th><th>Force 80%</th><th>Block 80%</th></tr>
+<tr><td>66</td><td>VHS validator count (live)</td><td>44</td><td>45</td><td>22</td><td>52</td><td>53</td><td>14</td></tr>
+<tr><td>50</td><td>partial participation sensitivity</td><td>33</td><td>34</td><td>17</td><td>40</td><td>41</td><td>10</td></tr>
+<tr><td>40</td><td>partial participation sensitivity</td><td>26</td><td>27</td><td>14</td><td>32</td><td>33</td><td>8</td></tr>
+<tr><td>30</td><td>partial participation sensitivity</td><td>20</td><td>21</td><td>10</td><td>24</td><td>25</td><td>6</td></tr>
+<tr><td>25</td><td>UNL count (live, VHS unl=true)</td><td>16</td><td>17</td><td>9</td><td>20</td><td>21</td><td>5</td></tr>
+<tr><td>17</td><td>probed node validation_quorum (live, server_info)</td><td>11</td><td>12</td><td>6</td><td>13</td><td>14</td><td>4</td></tr>
+</table>
+
+<h2>Amendment status counts</h2>
+<table>
+<tr><th>Metric</th><th>Count</th></tr>
+<tr><td>total_listed</td><td>101</td></tr>
+<tr><td>enabled</td><td>64</td></tr>
+<tr><td>not_enabled</td><td>37</td></tr>
+<tr><td>supported</td><td>101</td></tr>
+<tr><td>with_majority_timestamp</td><td>0</td></tr>
+<tr><td>postfiat_specific_total</td><td>2</td></tr>
+<tr><td>postfiat_specific_enabled</td><td>0</td></tr>
+<tr><td>fixAmendmentMajorityCalc_enabled</td><td>1</td></tr>
+</table>
+
+<h2>Validator-set counts</h2>
+<table>
+<tr><th>Metric</th><th>Count</th></tr>
+<tr><td>vhs_count</td><td>66</td></tr>
+<tr><td>rows_returned</td><td>66</td></tr>
+<tr><td>unl_count</td><td>25</td></tr>
+<tr><td>master_eq_validation_key</td><td>65</td></tr>
+<tr><td>signing_ne_master_key</td><td>66</td></tr>
+<tr><td>domain_verified</td><td>55</td></tr>
+<tr><td>revoked</td><td>0</td></tr>
+<tr><td>partial</td><td>0</td></tr>
+<tr><td>agreement_1h_missed_gt0</td><td>1</td></tr>
+<tr><td>server_version_1.0.0</td><td>2</td></tr>
+<tr><td>server_version_1.0.4</td><td>9</td></tr>
+<tr><td>server_version_1.0.8</td><td>1</td></tr>
+<tr><td>server_version_1.0.9</td><td>54</td></tr>
+</table>
+
+<h2>Reproduction</h2>
+<p class="mono">bash run_all.sh</p>
+<p>Regenerates every derived output offline from the vendored sample
+(<code>results/sample_amendment_data.json</code>), rebuilds this page,
+and verifies digests. Expected: exit 0, byte-identical outputs. See
+<code>REPRODUCTION.md</code> for the exact command and recorded
+result, <code>results/run_log.txt</code> for the raw console log, and
+<code>results/digest_check_output.txt</code> for the raw digest-check
+output. Verify digests at any time with
+<code>bash verify_digests.sh --check</code>. To fetch a fresh live
+sample instead, run <code>python3 harness.py --live</code> first
+(public read-only endpoints, no credentials), then
+<code>bash run_all.sh</code>.</p>
+
+<h2>Files</h2>
+<ul>
+<li><code>threat_model.md</code> — formal threat model: assets,
+trust boundaries, attacker model, amendment pipeline, attack-path
+summary, measured findings</li>
+<li><code>attack_trees.md</code> — nine attack trees (T-01 to T-09)
+with leaf evidence and file:line citations into the pinned tree</li>
+<li><code>threat_model.csv</code> — the seven assets with mechanism,
+attacker capability, pinned-tree evidence, measured support, verdict</li>
+<li><code>claim_evidence_index.md</code> — every headline claim mapped
+to repo file, field, and line (measured and source-derived claims in
+separate sections)</li>
+<li><code>harness.py</code> — live probe / offline analyser</li>
+<li><code>results/sample_amendment_data.json</code> — vendored raw sample</li>
+<li><code>results/fetch_log.json</code> — per-request fetch record</li>
+<li><code>results/summary.json</code> / <code>summary.txt</code> —
+derived measurements</li>
+<li><code>results/amendment_table.csv</code>,
+<code>results/amendment_counts.csv</code>,
+<code>results/validator_sample.csv</code>,
+<code>results/validator_counts.csv</code>,
+<code>results/attack_path_counts.csv</code>,
+<code>results/ledger_sample.csv</code> — per-record tables</li>
+</ul>
+
+<h2>Limitations</h2>
+<ul>
+<li>The live sample is a single point in time
+(2026-11-13T23:02:58Z); validator counts, ledger numbers, and amendment
+state move as the testnet advances. Offline reproduction re-derives
+from the vendored sample, not from a fresh fetch.</li>
+<li>Thresholds are computed from the live counts and the pinned-tree
+threshold code; no ledger was compiled or run locally, and no
+validation was forged or replayed against a live node.</li>
+<li>Validator public keys in the tables are public VHS data; no
+private key, seed, or credential appears anywhere in this pack.</li>
+</ul>
+</body>
+</html>
