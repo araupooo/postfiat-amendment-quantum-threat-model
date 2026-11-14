@@ -5,9 +5,11 @@
 ./claim_evidence_index.md: OK
 ./docs/index.html: OK
 ./harness.py: OK
+./mitigation_design.md: OK
 ./results/amendment_counts.csv: OK
 ./results/amendment_table.csv: OK
 ./results/attack_path_counts.csv: OK
+./results/digest_check_output.txt: OK
 ./results/fetch_log.json: OK
 ./results/ledger_sample.csv: OK
 ./results/run_log.txt: OK
