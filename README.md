@@ -36,6 +36,9 @@ support it halt with "server blocked".
   evidence and file:line citations into the pinned tree
 - `threat_model.csv` — the seven assets with mechanism, attacker
   capability, pinned-tree evidence, measured support, verdict
+- `mitigation_design.md` — hybrid classical + ML-DSA mitigation
+  design: dual-sign validation signatures, key rotation/revocation,
+  phased costs, rollback notes, monitoring
 - `claim_evidence_index.md` — every headline claim mapped to repo
   file, field, and line (measured and source-derived claims in
   separate sections)

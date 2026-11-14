@@ -174,6 +174,9 @@ summary, measured findings</li>
 with leaf evidence and file:line citations into the pinned tree</li>
 <li><code>threat_model.csv</code> — the seven assets with mechanism,
 attacker capability, pinned-tree evidence, measured support, verdict</li>
+<li><code>mitigation_design.md</code> — hybrid classical + ML-DSA
+mitigation design: dual-sign validation signatures, key
+rotation/revocation, phased costs, rollback notes, monitoring</li>
 <li><code>claim_evidence_index.md</code> — every headline claim mapped
 to repo file, field, and line (measured and source-derived claims in
 separate sections)</li>

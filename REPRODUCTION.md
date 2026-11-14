@@ -35,6 +35,21 @@ of the pack regenerates byte-identical derived outputs from the
 vendored sample (no network access, no timestamps written into
 outputs — the fetch date is copied from the vendored sample).
 
+## Update (2026-11-14, after the first reproduction)
+
+`mitigation_design.md` was added to the pack after the first
+reproduction (hybrid classical + ML-DSA mitigation design: dual-sign
+validation signatures, key rotation/revocation, phased costs,
+rollback notes, monitoring — the design the first submission's
+verifier flagged as missing). The pack was then re-reproduced from
+a fresh copy at `/tmp/pack-repro-amendment2/` with the same
+procedure: exit code **0**, all 11 derived outputs byte-identical,
+0 failures. `results/run_log.txt` is the raw console log of that
+second run. The digest manifest was regenerated to cover the new
+file, and `results/digest_check_output.txt` is the raw output of
+`bash verify_digests.sh --check` after the second run log was
+placed.
+
 ## Notes
 
 - Two paths exist, and both are recorded here:

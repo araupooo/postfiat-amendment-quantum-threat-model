@@ -62,3 +62,9 @@ check each kind independently.
   and take their numbers from M-09 (`results/attack_path_counts.csv`).
 - Headline finding (threat_model.md lines 12–27) is M-02 + M-04 +
   M-07 + M-09 + S-01 + S-02.
+- Mitigation design: `mitigation_design.md` (hybrid classical +
+  ML-DSA validation signatures, key rotation/revocation, phased
+  costs, rollback notes, monitoring). Its numbers are derived from
+  the sibling packs as labelled in-file (consensus-signature cost
+  model, validator-key lifecycle simulation); its file:line
+  citations were verified in the pinned tree.
