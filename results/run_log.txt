@@ -1,16 +1,20 @@
 harness.py: OK (offline mode, 100 ledgers, 101 amendments, 66 validators, 0 amendment pseudo-transactions)
 build_derived.py: OK (docs/index.html)
 ./README.md: OK
+./REPRODUCTION.md: OK
 ./attack_trees.md: OK
 ./build_derived.py: OK
 ./claim_evidence_index.md: OK
 ./docs/index.html: OK
 ./harness.py: OK
+./mitigation_design.md: OK
 ./results/amendment_counts.csv: OK
 ./results/amendment_table.csv: OK
 ./results/attack_path_counts.csv: OK
+./results/digest_check_output.txt: OK
 ./results/fetch_log.json: OK
 ./results/ledger_sample.csv: OK
+./results/run_log.txt: OK
 ./results/sample_amendment_data.json: OK
 ./results/summary.json: OK
 ./results/summary.txt: OK
